@@ -13,7 +13,7 @@ on:
 
 jobs:
   deploy-snowflake-changes-job:
-    runs-on: devRunner  #  Windows runner
+    runs-on: unbutu-latest
     
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
