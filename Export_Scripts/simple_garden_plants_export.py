@@ -26,10 +26,10 @@ with conn.cursor() as cursor:
 
 # Iterate over databases
 for database in databases:
+    print(database)
     # Create a directory for the database
     os.makedirs(database, exist_ok=True)
-    
-    print({database})
+        
     # Switch to the database
     conn.cursor().execute(f"USE DATABASE {database}")
 
