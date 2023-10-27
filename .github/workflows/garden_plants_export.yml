@@ -1,0 +1,49 @@
+name: garden_plants_export
+
+on:
+  workflow_run:
+    workflows: ["garden_plants_deploy_to_production"]
+    types:
+      - completed
+      
+ # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repo content
+        uses: actions/checkout@v3  
+    # 
+    # - name: setup python
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: '3.10' # install the python version needed
+
+    # - name: install python packages
+    #   run: |
+    #     python -m pip install --upgrade pip
+    #     pip install -r requirements.txt
+
+      - name: execute py script # run script
+        env:
+          SF_PRD_ACCOUNT: ${{ secrets.SF_PRD_ACCOUNT }}
+          SF_PRD_USERNAME: ${{ secrets.SF_PRD_USERNAME }}
+          SF_PRD_ROLE: ${{ secrets.SF_PRD_ROLE }}
+          SF_PRD_WAREHOUSE: ${{ secrets.SF_PRD_WAREHOUSE }}
+          SF_PRD_DATABASE: ${{ secrets.SF_PRD_DATABASE  }}
+          SF_PRD_PASSWORD: ${{ secrets.SF_PRD_PASSWORD }}   
+        run: | 
+         python Export_Scripts/simple_garden_plants_export.py
+          
+      - name: Commit DDL to GitHub
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add Garden_Plants_Export/  # Specify the target directory.
+          git commit -m "Update Snowflake DDL"
+          git push origin main
+        # This step configures Git, stages the specific directory, commits, and pushes it to the 'main' branch.
