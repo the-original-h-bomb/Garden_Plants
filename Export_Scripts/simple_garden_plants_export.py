@@ -18,7 +18,7 @@ conn = snowflake.connector.connect(
 )
 
 # Query to retrieve a list of databases
-get_databases_query = "SELECT DATABASE_NAME FROM INFORMATION_SCHEMA.DATABASES WHERE DATABASE_NAME NOT IN ('SNOWFLAKE', 'INFORMATION_SCHEMA');"
+get_databases_query = "SELECT DATABASE_NAME FROM INFORMATION_SCHEMA.DATABASES WHERE DATABASE_NAME NOT IN ('SNOWFLAKE', 'INFORMATION_SCHEMA', 'SNOWFLAKE_SAMPLE_DATA');"
 
 with conn.cursor() as cursor:
     cursor.execute(get_databases_query)
