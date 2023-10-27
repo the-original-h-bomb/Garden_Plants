@@ -1,0 +1,40 @@
+name: garden_plants_deploy_to_stage
+
+# Controls when the action will run. 
+on:
+  push:
+    branches:
+      - stage
+    paths:
+      - 'Garden_Plants_DB/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-snowflake-changes-job:
+    runs-on: devRunner  #  Windows runner
+    
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repository
+        uses: actions/checkout@v3       
+     # - uses: actions/setup-python@v4
+
+      - name: Run schemachange
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_STG_ACCOUNT }}
+          SF_USERNAME: ${{ secrets.SF_STG_USERNAME }}
+          SF_ROLE: ${{ secrets.SF_STG_ROLE }}
+          SF_WAREHOUSE: ${{ secrets.SF_STG_WAREHOUSE }}
+          SF_DATABASE: ${{ secrets.SF_STG_DATABASE  }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SF_STG_PASSWORD }}   
+          SF_CHANGE_HISTORY_TABLE: "${{ secrets.SF_STG_DATABASE  }}.SCHEMACHANGE.CHANGE_HISTORY"
+        run: |
+          echo "GITHUB_WORKSPACE: $env:GITHUB_WORKSPACE"
+          python --version
+          # echo "Step 1: Installing schemachange"
+          # python -m pip install schemachange  --upgrade
+          
+          echo "Step 2: Running schemachange"
+          schemachange -f "$env:GITHUB_WORKSPACE\Garden_Plants_DB" -a $env:SF_ACCOUNT -u $env:SF_USERNAME -r $env:SF_ROLE -w $env:SF_WAREHOUSE -d $env:SF_DATABASE -c $env:SF_CHANGE_HISTORY_TABLE --create-change-history-table
