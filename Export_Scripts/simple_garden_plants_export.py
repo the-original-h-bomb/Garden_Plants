@@ -17,32 +17,27 @@ conn = snowflake.connector.connect(
     database=database
 )
 
-# Query to retrieve a list of databases
-get_databases_query = "SELECT DATABASE_NAME FROM INFORMATION_SCHEMA.DATABASES WHERE DATABASE_NAME NOT IN ('SNOWFLAKE', 'INFORMATION_SCHEMA', 'SNOWFLAKE_SAMPLE_DATA');"
+# Snowflake cursor
+cursor = conn.cursor()
 
-with conn.cursor() as cursor:
-    cursor.execute(get_databases_query)
-    databases = [row[0] for row in cursor]
+# Export databases and artifacts - delivered databases contain some items that cannot be exported out
+db_query = f"select * from information_schema.databases " \
+        f"where database_NAME not like 'SNOWFLAKE%' AND TYPE = 'STANDARD';"
 
-# Iterate over databases
-for database in databases:
-    print(database)
-    # Create a directory for the database
-    os.makedirs(database, exist_ok=True)
-        
-    # Switch to the database
-    conn.cursor().execute(f"USE DATABASE {database}")
+# Execute the query to fetch all databases
+cursor.execute(db_query)
 
-    # Define the DDL export query
-    ddl_query = "SHOW TABLES;"
-    
-    # Execute the query and export DDL
-    with conn.cursor() as cursor:
-        cursor.execute(ddl_query)
-        ddl_statements = [row[2] for row in cursor]
+# Fetch all the databases
+databases = cursor.fetchall()
 
-    with open(os.path.join(database, "snowflake_ddl.sql"), "w") as ddl_file:
-        for statement in ddl_statements:
-            ddl_file.write(f"{statement}\n")
+for db in databases:
+    db_name = db[0]
+    db_export_path = os.path.join(export_path, db_name)
+    os.makedirs(db_export_path, exist_ok=True)
+    db_ddl_export_path = os.path.join(db_export_path, db_name + ".sql")
+    db_export_query = f"SELECT GET_DDL('DATABASE','{db_name}')"
+    cursor.execute(db_export_query)
+    db_create_statement = cursor.fetchone()[0]
 
-conn.close()
+    with open(db_ddl_export_path, 'w') as db_file:
+        db_file.write(db_create_statement)
