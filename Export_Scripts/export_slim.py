@@ -22,7 +22,7 @@ conn = snowflake.connector.connect(
 folder_path = 'Garden_Plants_Export'
 
 # Export DDL to a file
-ddl_query = 'SELECT GET_DDL('DATABASE','Garden_Plants');'
+ddl_query = f"SELECT GET_DDL('DATABASE','Garden_Plants');"
 cursor = conn.cursor()
 cursor.execute(ddl_query)
 ddl_results = cursor.fetchall()
