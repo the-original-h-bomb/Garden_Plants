@@ -40,7 +40,7 @@ jobs:
           SF_PRD_DATABASE: ${{ secrets.SF_PRD_DATABASE  }}
           SF_PRD_PASSWORD: ${{ secrets.SF_PRD_PASSWORD }}   
         run: | 
-         python Export_Scripts/simple_garden_plants_export.py
+         python Export_Scripts/export_slim.py
           
       - name: Commit DDL to GitHub
         run: |
