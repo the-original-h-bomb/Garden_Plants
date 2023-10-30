@@ -20,7 +20,7 @@ conn = snowflake.connector.connect(
 # Snowflake cursor
 cursor = conn.cursor()
 use_db_query = 'Use database garden_plants;'
-cursos.execute(use_db_query)
+cursor.execute(use_db_query)
 
 # Export databases and artifacts - delivered databases contain some items that cannot be exported out
 db_query = f"select * from information_schema.databases where database_NAME not like 'SNOWFLAKE%' AND TYPE = 'STANDARD';"
