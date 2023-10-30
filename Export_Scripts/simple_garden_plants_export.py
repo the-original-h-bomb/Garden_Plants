@@ -21,8 +21,7 @@ conn = snowflake.connector.connect(
 cursor = conn.cursor()
 
 # Export databases and artifacts - delivered databases contain some items that cannot be exported out
-db_query = f"select * from information_schema.databases " \
-        f"where database_NAME not like 'SNOWFLAKE%' AND TYPE = 'STANDARD';"
+db_query = f"use database garden_plants; select * from information_schema.databases where database_NAME not like 'SNOWFLAKE%' AND TYPE = 'STANDARD';"
 
 # Execute the query to fetch all databases
 cursor.execute(db_query)
