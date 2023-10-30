@@ -23,7 +23,7 @@ folder_path = 'Garden_Plants_Export'
 
 # Export DDL to a file
 ddl_query = 'SHOW TABLES;'
-cursor = con.cursor()
+cursor = conn.cursor()
 cursor.execute(ddl_query)
 ddl_results = cursor.fetchall()
 ddl_file_path = os.path.join(folder_path, 'ddl_export.sql')
