@@ -48,6 +48,6 @@ for db in databases:
 
 # Commit to GitHub
 # Replace 'commit message' with your desired commit message
-subprocess.call(['git', 'add', ddl_file_path])
+subprocess.call(['git', 'add', db_ddl_export_path])
 subprocess.call(['git', 'commit', '-m', 'commit message'])
 subprocess.call(['git', 'push'])
