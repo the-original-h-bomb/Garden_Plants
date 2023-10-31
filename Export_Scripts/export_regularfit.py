@@ -37,8 +37,8 @@ databases = cursor.fetchall()
 
 for db in databases:
     db_name = db[0]
-    os.makedirs(db_name, exist_ok=True)
-    db_ddl_export_path = os.path.join(folder_path+"/"+db_name, db_name + ".sql")
+    os.makedirs(os.path.join(folder_path, db_name), exist_ok=True)
+    db_ddl_export_path = os.path.join(folder_path, db_name, db_name + ".sql")
     db_export_query = f"SELECT GET_DDL('DATABASE','{db_name}')"
     cursor.execute(db_export_query)
     db_create_statement = cursor.fetchone()[0]
@@ -46,8 +46,6 @@ for db in databases:
     with open(db_ddl_export_path, 'w') as db_file:
         db_file.write(db_create_statement)
 
-# Commit to GitHub
-# Replace 'commit message' with your desired commit message
-subprocess.call(['git', 'add', db_ddl_export_path])
-subprocess.call(['git', 'commit', '-m', 'commit message'])
-subprocess.call(['git', 'push'])
+    # Commit to GitHub
+    subprocess.call(['git', 'add', db_ddl_export_path])
+    subprocess.call(['git', 'commit', '-m', f'Commit {db_name} DDL'])
