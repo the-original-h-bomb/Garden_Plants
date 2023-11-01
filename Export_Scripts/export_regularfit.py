@@ -216,7 +216,7 @@ for db in databases:
             subprocess.call(['git', 'commit', '-m', f'Commit {pipe_name} DDL'])
 
 ###### Export Policies (masking, password, row access and session)
-        policies_folder_path = os.path.join(schema_export_path, "POLICIES")
+        policies_folder_path = os.path.join(schema_folder_path, "POLICIES")
         os.makedirs(policies_folder_path, exist_ok=True)
 ###### masking policies
         masking_policies_query = f"SHOW MASKING POLICIES IN SCHEMA {db_name}.{schema_name}"
