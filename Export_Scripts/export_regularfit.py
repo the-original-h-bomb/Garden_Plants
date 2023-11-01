@@ -56,7 +56,7 @@ databases = cursor.fetchall()
 
 for db in databases:
     db_name = db[0]
-    os.makedirs(os.path.join(folder_path, "DB_"+db_name), exist_ok=True)
+    os.makedirs(os.path.join(folder_path, db_name), exist_ok=True)
     db_export_path = os.path.join(folder_path, db_name)
     db_ddl_export_path = os.path.join(db_export_path, db_name + ".sql")
     db_export_query = f"SELECT GET_DDL('DATABASE','{db_name}')"
@@ -91,3 +91,24 @@ for db in databases:
     # Commit Schemas to GitHub
     subprocess.call(['git', 'add', schema_ddl_export_path])
     subprocess.call(['git', 'commit', '-m', f'Commit {schema_name} DDL'])
+
+        # Export tables
+        table_folder_path = os.path.join(schema_export_path, "TABLES")
+        os.makedirs(table_folder_path, exist_ok=True)
+        table_query = f"SHOW TABLES IN SCHEMA {db_name}.{schema_name}"
+        cursor.execute(table_query)
+        tables = cursor.fetchall()
+
+        for table in tables:
+            table_name = table[1]
+            table_export_path = os.path.join(table_folder_path, table_name + ".sql")
+            table_export_query = f"SELECT GET_DDL('TABLE','{db_name}.{schema_name}.{table_name}')"
+            cursor.execute(table_export_query)
+            table_create_statement = cursor.fetchone()[0]
+
+            with open(table_export_path, 'w') as table_file:
+                table_file.write(table_create_statement)
+       
+        # Commit Tables to GitHub
+        subprocess.call(['git', 'add', table_export_path])
+        subprocess.call(['git', 'commit', '-m', f'Commit {table_name} DDL'])
