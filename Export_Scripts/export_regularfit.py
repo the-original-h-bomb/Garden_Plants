@@ -95,7 +95,7 @@ for db in databases:
 
         for table in tables:
             table_name = table[1]
-            table_folder_path = os.path.join(schema_export_path, "TABLES")
+            table_folder_path = os.path.join(schema_folder_path, "TABLES")
             os.makedirs(table_folder_path, exist_ok=True)
             table_export_path = os.path.join(table_folder_path, table_name + ".sql")
             table_export_query = f"SELECT GET_DDL('TABLE','{db_name}.{schema_name}.{table_name}')"
