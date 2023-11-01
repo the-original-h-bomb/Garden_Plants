@@ -223,7 +223,7 @@ for db in databases:
 
         for alert in alerts:
             alert_name = alert[1]
-            alert_folder_path = s.path.join(schema_folder_path, "ALERTS")
+            alert_folder_path = os.path.join(schema_folder_path, "ALERTS")
             os.makedirs(alert_folder_path, exist_ok=True)
             alert_export_path = os.path.join(alert_folder_path, alert_name + ".sql")
             alert_export_query = f"SELECT GET_DDL('ALERT','{db_name}.{schema_name}.{alert_name}')"
@@ -244,7 +244,7 @@ for db in databases:
 
         for dynamic_table in dynamic_tables:
             dynamic_table_name = dynamic_table[1]
-            dynamic_table_folder_path = s.path.join(schema_folder_path, "DYNAMIC_TABLES")
+            dynamic_table_folder_path = os.path.join(schema_folder_path, "DYNAMIC_TABLES")
             os.makedirs(dynamic_table_folder_path, exist_ok=True)
             dynamic_table_export_path = os.path.join(dynamic_table_folder_path, dynamic_table_name + ".sql")
             dynamic_table_export_query = f"SELECT GET_DDL('DYNAMIC_TABLE','{db_name}.{schema_name}.{dynamic_table_name}')"
@@ -265,7 +265,7 @@ for db in databases:
 
         for event_table in event_tables:
             event_table_name = event_table[1]
-            event_table_folder_path = s.path.join(schema_folder_path, "EVENT_TABLES")
+            event_table_folder_path = os.path.join(schema_folder_path, "EVENT_TABLES")
             os.makedirs(event_table_folder_path, exist_ok=True)
             event_table_export_path = os.path.join(event_table_folder_path, event_table_name + ".sql")
             event_table_export_query = f"SELECT GET_DDL('EVENT TABLE','{db_name}.{schema_name}.{event_table_name}')"
@@ -286,7 +286,7 @@ for db in databases:
 
         for external_table in external_tables:
             external_table_name = external_table[1]
-            external_table_folder_path = s.path.join(schema_folder_path, "EXTERNAL_TABLES")
+            external_table_folder_path = os.path.join(schema_folder_path, "EXTERNAL_TABLES")
             os.makedirs(external_table_folder_path, exist_ok=True)
             external_table_export_path = os.path.join(external_table_folder_path, external_table_name + ".sql")
             external_table_export_query = f"SELECT GET_DDL('EXTERNAL TABLE','{db_name}.{schema_name}.{external_table_name}')"
@@ -307,7 +307,7 @@ for db in databases:
 
         for file_format in file_formats:
             file_format_name = file_format[1]
-            file_format_folder_path = s.path.join(schema_folder_path, "FILE_FORMATS")
+            file_format_folder_path = os.path.join(schema_folder_path, "FILE_FORMATS")
             os.makedirs(external_table_folder_path, exist_ok=True)
             file_format_export_path = os.path.join(file_formats_folder_path, file_format_name + ".sql")
             file_format_export_query = f"SELECT GET_DDL('FILE FORMATS','{db_name}.{schema_name}.{file_format_name}')"
@@ -329,7 +329,7 @@ for db in databases:
 
         for pipe in pipes:
             pipe_name = pipe[1]
-            pipe_format_folder_path = s.path.join(schema_folder_path, "PIPES")
+            pipe_format_folder_path = os.path.join(schema_folder_path, "PIPES")
             os.makedirs(pipe_folder_path, exist_ok=True)
             pipe_export_path = os.path.join(pipes_folder_path, pipe_name + ".sql")
             pipe_export_query = f"SELECT GET_DDL('PIPES','{db_name}.{schema_name}.{pipe_name}')"
@@ -353,7 +353,7 @@ for db in databases:
 
         for mpolicy in mpolicies:
             mpolicy_name = mpolicy[1]
-            mpolicy_folder_path = s.path.join(policies_folder_path, "MASKING")
+            mpolicy_folder_path = os.path.join(policies_folder_path, "MASKING")
             os.makedirs(mpolicy_folder_path, exist_ok=True)
             mpolicy_export_path = os.path.join(mpolicy_folder_path, mpolicy_name + ".sql")
             mpolicy_export_query = f"SELECT GET_DDL('POLICY','{db_name}.{schema_name}.{mpolicy_name}')"
@@ -374,7 +374,7 @@ for db in databases:
 
         for ppolicy in ppolicies:
             ppolicy_name = ppolicy[1]
-            ppolicy_folder_path = s.path.join(policies_folder_path, "PASSWORD")
+            ppolicy_folder_path = os.path.join(policies_folder_path, "PASSWORD")
             os.makedirs(ppolicy_folder_path, exist_ok=True)
             ppolicy_export_path = os.path.join(ppolicy_folder_path, ppolicy_name + ".sql")
             ppolicy_export_query = f"SELECT GET_DDL('POLICIES','{db_name}.{schema_name}.{ppolicy_name}')"
@@ -396,7 +396,7 @@ for db in databases:
 
         for rapolicy in rapolicies:
             rapolicy_name = rapolicy[1]
-            rapolicy_folder_path = s.path.join(policies_folder_path, "ROW_ACCESS")
+            rapolicy_folder_path = os.path.join(policies_folder_path, "ROW_ACCESS")
             os.makedirs(rapolicy_folder_path, exist_ok=True)
             rapolicy_export_path = os.path.join(rapolicy_folder_path, rapolicy_name + ".sql")
             rapolicy_export_query = f"SELECT GET_DDL('POLICIES','{db_name}.{schema_name}.{rapolicy_name}')"
@@ -417,7 +417,7 @@ for db in databases:
 
         for spolicy in spolicies:
             spolicy_name = spolicy[1]
-            spolicy_folder_path = s.path.join(policies_folder_path, "SESSION")
+            spolicy_folder_path = os.path.join(policies_folder_path, "SESSION")
             os.makedirs(spolicy_folder_path, exist_ok=True)
             spolicy_export_path = os.path.join(spolicy_folder_path, spolicy_name + ".sql")
             spolicy_export_query = f"SELECT GET_DDL('POLICIES','{db_name}.{schema_name}.{spolicy_name}')"
@@ -438,7 +438,7 @@ for db in databases:
 
         for sequence in sequences:
             sequence_name = sequence[1]
-            sequence_folder_path = s.path.join(schema_folder_path, "SEQUENCES")
+            sequence_folder_path = os.path.join(schema_folder_path, "SEQUENCES")
             os.makedirs(sequence_folder_path, exist_ok=True)
             sequence_export_path = os.path.join(sequences_folder_path, sequence_name + ".sql")
             sequence_export_query = f"SELECT GET_DDL('SEQUENCES','{db_name}.{schema_name}.{sequence_name}')"
@@ -461,7 +461,7 @@ for db in databases:
             sp_name = sp[2]
             sp_arg = sp[4]
             sp_arg_substring = sp_arg.replace("W_DB_NAME ", "")
-            sp_folder_path = s.path.join(schema_folder_path, "STORED_PROCEDURES")
+            sp_folder_path = os.path.join(schema_folder_path, "STORED_PROCEDURES")
             os.makedirs(sp_folder_path, exist_ok=True)
             sp_export_path = os.path.join(stored_procedures_folder_path, sp_name + ".sql")
             sp_export_query = f"SELECT GET_DDL('PROCEDURE', '{db_name}.{schema_name}.{sp_name}{sp_arg_substring}')"
