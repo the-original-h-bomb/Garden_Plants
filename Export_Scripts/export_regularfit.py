@@ -258,28 +258,28 @@ for db in databases:
             subprocess.call(['git', 'add', dynamic_table_export_path])
             subprocess.call(['git', 'commit', '-m', f'Commit {dynamic_table_name} DDL'])
 
-``` get_ddl doesn't work with event tables ... research
+# get_ddl doesn't work with event tables ... research
 ###### Export Event Tables
-        event_table_query = f"SHOW EVENT TABLES IN SCHEMA {db_name}.{schema_name}"
-        cursor.execute(event_table_query)
-        event_tables = cursor.fetchall()
-
-        for event_table in event_tables:
-            event_table_name = event_table[1]
-            event_table_folder_path = os.path.join(schema_folder_path, "EVENT_TABLES")
-            os.makedirs(event_table_folder_path, exist_ok=True)
-            event_table_export_path = os.path.join(event_table_folder_path, event_table_name + ".sql")
-            event_table_export_query = f"SELECT GET_DDL('EVENT TABLE','{db_name}.{schema_name}.{event_table_name}')"
-            cursor.execute(event_table_export_query)
-            event_table_create_statement = cursor.fetchone()[0]
-
-            with open(event_table_export_path, 'w') as event_table_file:
-                event_table_file.write(event_table_create_statement)
-            
+#        event_table_query = f"SHOW EVENT TABLES IN SCHEMA {db_name}.{schema_name}"
+#        cursor.execute(event_table_query)
+#        event_tables = cursor.fetchall()
+#
+#        for event_table in event_tables:
+#            event_table_name = event_table[1]
+#            event_table_folder_path = os.path.join(schema_folder_path, "EVENT_TABLES")
+#            os.makedirs(event_table_folder_path, exist_ok=True)
+#            event_table_export_path = os.path.join(event_table_folder_path, event_table_name + ".sql")
+#            event_table_export_query = f"SELECT GET_DDL('EVENT TABLE','{db_name}.{schema_name}.{event_table_name}')"
+#            cursor.execute(event_table_export_query)
+#            event_table_create_statement = cursor.fetchone()[0]
+#
+#            with open(event_table_export_path, 'w') as event_table_file:
+#                event_table_file.write(event_table_create_statement)
+#            
             # Commit Tables to GitHub
-            subprocess.call(['git', 'add', event_table_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {event_table_name} DDL'])
-```
+#            subprocess.call(['git', 'add', event_table_export_path])
+#            subprocess.call(['git', 'commit', '-m', f'Commit {event_table_name} DDL'])
+
 
 ###### Export External Tables
         external_table_query = f"SHOW EXTERNAL TABLES IN SCHEMA {db_name}.{schema_name}"
