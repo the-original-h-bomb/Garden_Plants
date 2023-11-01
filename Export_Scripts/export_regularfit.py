@@ -29,6 +29,7 @@ cursor.execute(use_db_query)
 
 ### security table dump ####
 
+os.makedirs(os.path.join(folder_path, 'Security_Tables'), exist_ok=True)
 gtr_export_path = os.path.join(folder_path, 'Security_Tables', "GRANTS_TO_ROLES.csv")
 gtr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES;"
 cursor.execute(gtr_query)
