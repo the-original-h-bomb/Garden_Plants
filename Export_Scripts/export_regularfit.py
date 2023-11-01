@@ -117,6 +117,7 @@ for db in databases:
         for view in views:
             view_name = view[1]
             view_folder_path = os.path.join(schema_folder_path, "VIEWS")
+            os.makedirs(view_folder_path, exist_ok=True)
             view_export_path = os.path.join(view_folder_path, view_name + ".sql")
             view_export_query = f"SELECT GET_DDL('VIEW','{db_name}.{schema_name}.{view_name}')"
             cursor.execute(view_export_query)
