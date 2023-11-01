@@ -108,7 +108,114 @@ for db in databases:
             # Commit Tables to GitHub
             subprocess.call(['git', 'add', alert_export_path])
             subprocess.call(['git', 'commit', '-m', f'Commit {alert_name} DDL'])
+
+###### Export dynamic_tables
+        dynamic_table_query = f"SHOW DYNAMIC TABLES IN SCHEMA {db_name}.{schema_name}"
+        cursor.execute(dynamic_table_query)
+        dynamic_tables = cursor.fetchall()
+
+        for dynamic_table in dynamic_tables:
+            dynamic_table_name = dynamic_table[1]
+            dynamic_table_folder_path = s.path.join(schema_folder_path, "DYNAMIC_TABLES")
+            os.makedirs(dynamic_table_folder_path, exist_ok=True)
+            dynamic_table_export_path = os.path.join(dynamic_table_folder_path, dynamic_table_name + ".sql")
+            dynamic_table_export_query = f"SELECT GET_DDL('DYNAMIC_TABLE','{db_name}.{schema_name}.{dynamic_table_name}')"
+            cursor.execute(dynamic_table_export_query)
+            dynamic_table_create_statement = cursor.fetchone()[0]
+
+            with open(dynamic_table_export_path, 'w') as dynamic_table_file:
+                dynamic_table_file.write(dynamic_table_create_statement)
             
+            # Commit Tables to GitHub
+            subprocess.call(['git', 'add', dynamic_table_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {dynamic_table_name} DDL'])
+            
+###### Export Event Tables
+        event_table_query = f"SHOW EVENT TABLES IN SCHEMA {db_name}.{schema_name}"
+        cursor.execute(event_table_query)
+        event_tables = cursor.fetchall()
+
+        for event_table in event_tables:
+            event_table_name = event_table[1]
+            event_table_folder_path = s.path.join(schema_folder_path, "EVENT_TABLES")
+            os.makedirs(event_table_folder_path, exist_ok=True)
+            event_table_export_path = os.path.join(event_table_folder_path, event_table_name + ".sql")
+            event_table_export_query = f"SELECT GET_DDL('EVENT TABLE','{db_name}.{schema_name}.{event_table_name}')"
+            cursor.execute(event_table_export_query)
+            event_table_create_statement = cursor.fetchone()[0]
+
+            with open(event_table_export_path, 'w') as event_table_file:
+                event_table_file.write(event_table_create_statement)
+            
+            # Commit Tables to GitHub
+            subprocess.call(['git', 'add', event_table_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {event_table_name} DDL'])
+        
+###### Export External Tables
+        external_table_query = f"SHOW EXTERNAL TABLES IN SCHEMA {db_name}.{schema_name}"
+        cursor.execute(external_table_query)
+        external_tables = cursor.fetchall()
+
+        for external_table in external_tables:
+            external_table_name = external_table[1]
+            external_table_folder_path = s.path.join(schema_folder_path, "EXTERNAL_TABLES")
+            os.makedirs(external_table_folder_path, exist_ok=True)
+            external_table_export_path = os.path.join(external_table_folder_path, external_table_name + ".sql")
+            external_table_export_query = f"SELECT GET_DDL('EXTERNAL TABLE','{db_name}.{schema_name}.{external_table_name}')"
+            cursor.execute(external_table_export_query)
+            external_table_create_statement = cursor.fetchone()[0]
+
+            with open(external_table_export_path, 'w') as external_table_file:
+                external_table_file.write(external_table_create_statement)
+            
+            # Commit Tables to GitHub
+            subprocess.call(['git', 'add', external_table_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {external_table_name} DDL'])
+        
+###### Export File Formats
+        file_formats_query = f"SHOW FILE FORMATS IN SCHEMA {db_name}.{schema_name}"
+        cursor.execute(file_formats_query)
+        file_formats = cursor.fetchall()
+
+        for file_format in file_formats:
+            file_format_name = file_format[1]
+            file_format_folder_path = s.path.join(schema_folder_path, "FILE_FORMATS")
+            os.makedirs(external_table_folder_path, exist_ok=True)
+            file_format_export_path = os.path.join(file_formats_folder_path, file_format_name + ".sql")
+            file_format_export_query = f"SELECT GET_DDL('FILE FORMATS','{db_name}.{schema_name}.{file_format_name}')"
+            cursor.execute(file_format_export_query)
+            file_format_create_statement = cursor.fetchone()[0]
+
+            with open(file_format_export_path, 'w') as file_format_file:
+                file_format_file.write(file_format_create_statement)
+
+            # Commit Tables to GitHub
+            subprocess.call(['git', 'add', file_format_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {file_format_name} DDL'])
+        
+###### Export Pipes
+
+        pipes_query = f"SHOW PIPES IN SCHEMA {db_name}.{schema_name}"
+        cursor.execute(pipes_query)
+        pipes = cursor.fetchall()
+
+        for pipe in pipes:
+            pipe_name = pipe[1]
+            pipe_format_folder_path = s.path.join(schema_folder_path, "PIPES")
+            os.makedirs(pipe_folder_path, exist_ok=True)
+            pipe_export_path = os.path.join(pipes_folder_path, pipe_name + ".sql")
+            pipe_export_query = f"SELECT GET_DDL('PIPES','{db_name}.{schema_name}.{pipe_name}')"
+            cursor.execute(pipe_export_query)
+            pipe_create_statement = cursor.fetchone()[0]
+
+            with open(pipe_export_path, 'w') as pipe_file:
+                pipe_file.write(pipe_create_statement)
+            
+            # Commit Tables to GitHub
+            subprocess.call(['git', 'add', pipe_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {pipe_name} DDL'])
+        
+
 ###### Export tables
         table_query = f"SHOW TABLES IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(table_query)
