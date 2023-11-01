@@ -45,7 +45,7 @@ subprocess.call(['git', 'add', gtr_export_path])
 subprocess.call(['git', 'commit', '-m', f'GRANTS_TO_ROLES.csv'])
 
 ###### Grants to Users
-gtu_export_path = os.path.join(folder_path, "GRANTS_TO_USERS.csv")
+gtu_export_path = os.path.join(folder_path, 'Security_Tables', "GRANTS_TO_USERS.csv")
 gtu_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS;"
 cursor.execute(gtu_query)
 gtu_file = cursor.fetchall()
@@ -60,7 +60,7 @@ subprocess.call(['git', 'add', gtu_export_path])
 subprocess.call(['git', 'commit', '-m', f'GRANTS_TO_USERS.csv'])
 
 ###### LOGIN HISTORY
-lh_export_path = os.path.join(folder_path, "LOGIN_HISTORY.csv")
+lh_export_path = os.path.join(folder_path, 'Security_Tables', "LOGIN_HISTORY.csv")
 lh_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY;"
 cursor.execute(lh_query)
 lh_file = cursor.fetchall()
@@ -75,7 +75,7 @@ subprocess.call(['git', 'add', lh_export_path])
 subprocess.call(['git', 'commit', '-m', f'LOGIN_HISTORY.csv'])
 
 ###### PASSWORD POLICIES
-PP_export_path = os.path.join(folder_path, "PASSWORD_POLICIES.csv")
+PP_export_path = os.path.join(folder_path, 'Security_Tables', "PASSWORD_POLICIES.csv")
 PP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.PASSWORD_POLICIES;"
 cursor.execute(PP_query)
 PP_file = cursor.fetchall()
@@ -91,7 +91,7 @@ subprocess.call(['git', 'add', PP_export_path])
 subprocess.call(['git', 'commit', '-m', f'PASSWORD_POLICIES.csv'])
 
 ###### POLICY REFERENCES
-pr_export_path = os.path.join(folder_path, "POLICY_REFERENCES.csv")
+pr_export_path = os.path.join(folder_path, 'Security_Tables', "POLICY_REFERENCES.csv")
 pr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.POLICY_REFERENCES;"
 cursor.execute(pr_query)
 pr_file = cursor.fetchall()
@@ -107,7 +107,7 @@ subprocess.call(['git', 'add', pr_export_path])
 subprocess.call(['git', 'commit', '-m', f'POLICY_REFERENCES.csv'])
 
 ###### ROLES
-roles_export_path = os.path.join(folder_path, "ROLES.csv")
+roles_export_path = os.path.join(folder_path, 'Security_Tables', "ROLES.csv")
 roles_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.ROLES;"
 cursor.execute(roles_query)
 roles_file = cursor.fetchall()
@@ -123,7 +123,7 @@ subprocess.call(['git', 'add', roles_export_path])
 subprocess.call(['git', 'commit', '-m', f'ROLES.csv'])
 
 ###### SESSION POLICIES
-SP_export_path = os.path.join(folder_path, "SESSION_POLICIES.csv")
+SP_export_path = os.path.join(folder_path, 'Security_Tables', "SESSION_POLICIES.csv")
 SP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSION_POLICIES;"
 cursor.execute(SP_query)
 SP_file = cursor.fetchall()
@@ -141,7 +141,7 @@ subprocess.call(['git', 'commit', '-m', f'SESSION_POLICIES.csv'])
 
 ###### SESSIONS
 #SESSIONS DATA IS MORE THAN GIT WILL ALLOW WITH .COM LICENSE - BUT WE MAY NOT WANT THIS ANYWAY
-SESSIONS_export_path = os.path.join(folder_path, "SESSIONS.csv")
+SESSIONS_export_path = os.path.join(folder_path, 'Security_Tables', "SESSIONS.csv")
 SESSIONS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSIONS;"
 cursor.execute(SESSIONS_query)
 SESSIONS_file = cursor.fetchall()
@@ -157,7 +157,7 @@ subprocess.call(['git', 'add', SESSIONS_export_path])
 subprocess.call(['git', 'commit', '-m', f'SESSIONS.csv'])
 
 ###### USERS     
-USERS_export_path = os.path.join(folder_path, "USERS.csv")
+USERS_export_path = os.path.join(folder_path, 'Security_Tables', "USERS.csv")
 USERS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.USERS;"
 cursor.execute(USERS_query)
 USERS_file = cursor.fetchall()
