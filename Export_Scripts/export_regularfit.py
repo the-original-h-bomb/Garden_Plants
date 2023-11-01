@@ -324,22 +324,28 @@ for db in databases:
             subprocess.call(['git', 'add', sequence_export_path])
             subprocess.call(['git', 'commit', '-m', f'Commit {sequence_name} DDL'])
         
-        # # Export stored procedures
-        # sp_query = f"select * from {db_name}.information_schema.procedures where procedure_schema = '{schema_name}'"
-        # cursor.execute(sp_query)
-        # stored_procedures = cursor.fetchall()
-        #
-        # for sp in stored_procedures:
-        #     sp_name = sp[2]
-        #     sp_arg = sp[4]
-        #     sp_arg_substring = sp_arg.replace("W_DB_NAME ", "")
-        #     sp_export_path = os.path.join(stored_procedures_folder_path, sp_name + ".sql")
-        #     sp_export_query = f"SELECT GET_DDL('PROCEDURE', '{db_name}.{schema_name}.{sp_name}{sp_arg_substring}')"
-        #     cursor.execute(sp_export_query)
-        #     sp_create_statement = cursor.fetchone()[0]
-        #
-        #     with open(sp_export_path, 'w') as sp_file:
-        #         sp_file.write(sp_create_statement)
+###### Export stored procedures
+        sp_query = f"select * from {db_name}.information_schema.procedures where procedure_schema = '{schema_name}'"
+        cursor.execute(sp_query)
+        stored_procedures = cursor.fetchall()
+        
+        for sp in stored_procedures:
+            sp_name = sp[2]
+            sp_arg = sp[4]
+            sp_arg_substring = sp_arg.replace("W_DB_NAME ", "")
+            sp_folder_path = s.path.join(schema_folder_path, "STORED_PROCEDURES")
+            os.makedirs(sp_folder_path, exist_ok=True)
+            sp_export_path = os.path.join(stored_procedures_folder_path, sp_name + ".sql")
+            sp_export_query = f"SELECT GET_DDL('PROCEDURE', '{db_name}.{schema_name}.{sp_name}{sp_arg_substring}')"
+            cursor.execute(sp_export_query)
+            sp_create_statement = cursor.fetchone()[0]
+        
+            with open(sp_export_path, 'w') as sp_file:
+                sp_file.write(sp_create_statement)
+            
+            # Commit to GitHub
+            subprocess.call(['git', 'add', sp_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {sp_name} DDL'])
 
 ###### Export streams
         streams_query = f"SHOW STREAMS IN SCHEMA {db_name}.{schema_name};"
@@ -383,6 +389,74 @@ for db in databases:
             subprocess.call(['git', 'add', table_export_path])
             subprocess.call(['git', 'commit', '-m', f'Commit {table_name} DDL'])
 
+###### Export Tags
+        tags_query = f"SHOW TAGS IN SCHEMA {db_name}.{schema_name}"
+        cursor.execute(tags_query)
+        tags = cursor.fetchall()
+
+        for tag in tags:
+            tag_name = tag[1]
+            tag_folder_path = os.path.join(schema_folder_path, "TAGS")
+            os.makedirs(tag_folder_path, exist_ok=True)
+            tag_export_path = os.path.join(tags_folder_path, tag_name + ".sql")
+            tag_export_query = f"SELECT GET_DDL('TAG','{db_name}.{schema_name}.{tag_name}')"
+            cursor.execute(tag_export_query)
+            tag_create_statement = cursor.fetchone()[0]
+
+            with open(tag_export_path, 'w') as tag_file:
+                tag_file.write(tag_create_statement)
+
+            # Commit to GitHub
+            subprocess.call(['git', 'add', tag_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {tag_name} DDL'])
+
+###### Export tasks
+        tasks_query = f"SHOW TASKS IN SCHEMA {db_name}.{schema_name};"
+        cursor.execute(tasks_query)
+        tasks = cursor.fetchall()
+
+        for tasks in tasks:
+            tasks_name = tasks[1]
+            tasks_folder_path = os.path.join(schema_folder_path, "TASKS")
+            os.makedirs(tasks_folder_path, exist_ok=True)
+            tasks_export_path = os.path.join(tasks_folder_path, tasks_name + ".sql")
+            tasks_export_query = f"SELECT GET_DDL('TASK', '{db_name}.{schema_name}.{tasks_name}')"
+            cursor.execute(tasks_export_query)
+            tasks_create_statement = cursor.fetchone()[0]
+
+            with open(tasks_export_path, 'w') as tasks_file:
+                tasks_file.write(tasks_create_statement)
+            
+            # Commit to GitHub
+            subprocess.call(['git', 'add', tasks_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {task_name} DDL'])
+
+        
+###### Export User Defined Functions
+
+        functions_query = f"SHOW USER FUNCTIONS IN SCHEMA {db_name}.{schema_name};"
+        cursor.execute(functions_query)
+        functions = cursor.fetchall()
+
+        for function in functions:
+            function_name = function[8]
+            delimit = ' RETURN'
+            function_name = function_name.split(delimit, 1)[0]
+            function_folder_path = os.path.join(schema_folder_path, "FUNCTIONS")
+            os.makedirs(function_folder_path, exist_ok=True)
+            function_export_path = os.path.join(udf_folder_path, function_name + ".sql")
+            function_export_query = f"SELECT GET_DDL('FUNCTION', '{db_name}.{schema_name}.{function_name}')"
+            cursor.execute(function_export_query)
+            function_create_statement = cursor.fetchone()[0]
+
+            with open(function_export_path, 'w') as function_file:
+                function_file.write(function_create_statement)   
+
+            # Commit to GitHub
+            subprocess.call(['git', 'add', function_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {function_name} DDL'])
+        
+        
 ###### Export views
         view_query = f"SHOW VIEWS IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(view_query)
