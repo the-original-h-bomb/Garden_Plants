@@ -88,7 +88,7 @@ with open(PP_export_path, mode='w', newline='') as file:
 
 # Commit to GitHub
 subprocess.call(['git', 'add', PP_export_path])
-subprocess.call(['git', 'commit', '-m', f'PASSWORD_POLICIES.csv']
+subprocess.call(['git', 'commit', '-m', f'PASSWORD_POLICIES.csv'])
 
 ###### POLICY REFERENCES
 pr_export_path = os.path.join(export_path, "POLICY_REFERENCES.csv")
@@ -104,7 +104,7 @@ with open(pr_export_path, mode='w', newline='') as file:
 
 # Commit to GitHub
 subprocess.call(['git', 'add', pr_export_path])
-subprocess.call(['git', 'commit', '-m', f'POLICY_REFERENCES.csv']
+subprocess.call(['git', 'commit', '-m', f'POLICY_REFERENCES.csv'])
 
 ###### ROLES
 roles_export_path = os.path.join(export_path, "ROLES.csv")
@@ -120,7 +120,7 @@ with open(roles_export_path, mode='w', newline='') as file:
 
 # Commit to GitHub
 subprocess.call(['git', 'add', roles_export_path])
-subprocess.call(['git', 'commit', '-m', f'ROLES.csv']
+subprocess.call(['git', 'commit', '-m', f'ROLES.csv'])
 
 ###### SESSION POLICIES
 SP_export_path = os.path.join(export_path, "SESSION_POLICIES.csv")
@@ -136,7 +136,7 @@ with open(SP_export_path, mode='w', newline='') as file:
 
 # Commit to GitHub
 subprocess.call(['git', 'add', SP_export_path])
-subprocess.call(['git', 'commit', '-m', f'SESSION_POLICIES.csv']
+subprocess.call(['git', 'commit', '-m', f'SESSION_POLICIES.csv'])
 
 
 ###### SESSIONS
@@ -154,7 +154,7 @@ with open(SESSIONS_export_path, mode='w', newline='') as file:
 
 # Commit to GitHub
 subprocess.call(['git', 'add', SESSIONS_export_path])
-subprocess.call(['git', 'commit', '-m', f'SESSIONS.csv']
+subprocess.call(['git', 'commit', '-m', f'SESSIONS.csv'])
 
 ###### USERS     
 USERS_export_path = os.path.join(export_path, "USERS.csv")
@@ -170,9 +170,10 @@ with open(USERS_export_path, mode='w', newline='') as file:
 
 # Commit to GitHub
 subprocess.call(['git', 'add', USERS_export_path])
-subprocess.call(['git', 'commit', '-m', f'USERS.csv']
+subprocess.call(['git', 'commit', '-m', f'USERS.csv'])
 
-# Export databases and artifacts - delivered databases contain some items that cannot be exported out
+###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### 
+###### Export databases and artifacts - delivered databases contain some items that cannot be exported out
 db_query = f"select * from information_schema.databases where database_NAME not like 'SNOWFLAKE%' AND TYPE = 'STANDARD';"
 
 # Execute the query to fetch all databases
