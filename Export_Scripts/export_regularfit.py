@@ -19,13 +19,13 @@ conn = snowflake.connector.connect(
     database=database
 )
 
-# Specify the folder path within your repository
+# Specify the folder path within your repository for exports
 folder_path = 'Garden_Plants_Export'
 
 # Snowflake cursor
 cursor = conn.cursor()
-use_db_query = 'Use database garden_plants;'
-cursor.execute(use_db_query)
+#use_db_query = 'Use database garden_plants;'
+#cursor.execute(use_db_query)
 
 ### security table dump ####
 
