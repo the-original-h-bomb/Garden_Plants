@@ -72,7 +72,7 @@ with open(lh_export_path, mode='w', newline='') as file:
         writer.writerow(row)
 # Commit to GitHub
 subprocess.call(['git', 'add', lh_export_path])
-subprocess.call(['git', 'commit', '-m', f'LOGIN_HISTORY.csv']
+subprocess.call(['git', 'commit', '-m', f'LOGIN_HISTORY.csv'])
 
 ###### PASSWORD POLICIES
 PP_export_path = os.path.join(export_path, "PASSWORD_POLICIES.csv")
