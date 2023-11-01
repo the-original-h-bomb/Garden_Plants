@@ -24,12 +24,11 @@ folder_path = 'Garden_Plants_Export'
 
 # Snowflake cursor
 cursor = conn.cursor()
-#use_db_query = 'Use database garden_plants;'
-#cursor.execute(use_db_query)
 
 ### security table dump ####
-
 os.makedirs(os.path.join(folder_path, 'Security_Tables'), exist_ok=True)
+
+###### Grants to Roles
 gtr_export_path = os.path.join(folder_path, 'Security_Tables', "GRANTS_TO_ROLES.csv")
 gtr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES;"
 cursor.execute(gtr_query)
@@ -42,8 +41,136 @@ with open(gtr_export_path, mode='w', newline='') as file:
         writer.writerow(row)
 
 # Commit to GitHub
-    subprocess.call(['git', 'add', gtr_export_path])
-    subprocess.call(['git', 'commit', '-m', f'GRANTS_TO_ROLES.csv'])
+subprocess.call(['git', 'add', gtr_export_path])
+subprocess.call(['git', 'commit', '-m', f'GRANTS_TO_ROLES.csv'])
+
+###### Grants to Users
+gtu_export_path = os.path.join(export_path, "GRANTS_TO_USERS.csv")
+gtu_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS;"
+cursor.execute(gtu_query)
+gtu_file = cursor.fetchall()
+
+with open(gtu_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in gtu_file:
+        writer.writerow(row)
+# Commit to GitHub
+subprocess.call(['git', 'add', gtu_export_path])
+subprocess.call(['git', 'commit', '-m', f'GRANTS_TO_USERS.csv'])
+
+###### LOGIN HISTORY
+lh_export_path = os.path.join(export_path, "LOGIN_HISTORY.csv")
+lh_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY;"
+cursor.execute(lh_query)
+lh_file = cursor.fetchall()
+
+with open(lh_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in lh_file:
+        writer.writerow(row)
+# Commit to GitHub
+subprocess.call(['git', 'add', lh_export_path])
+subprocess.call(['git', 'commit', '-m', f'LOGIN_HISTORY.csv']
+
+###### PASSWORD POLICIES
+PP_export_path = os.path.join(export_path, "PASSWORD_POLICIES.csv")
+PP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.PASSWORD_POLICIES;"
+cursor.execute(PP_query)
+PP_file = cursor.fetchall()
+
+with open(PP_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in PP_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+subprocess.call(['git', 'add', PP_export_path])
+subprocess.call(['git', 'commit', '-m', f'PASSWORD_POLICIES.csv']
+
+###### POLICY REFERENCES
+pr_export_path = os.path.join(export_path, "POLICY_REFERENCES.csv")
+pr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.POLICY_REFERENCES;"
+cursor.execute(pr_query)
+pr_file = cursor.fetchall()
+
+with open(pr_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in pr_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+subprocess.call(['git', 'add', pr_export_path])
+subprocess.call(['git', 'commit', '-m', f'POLICY_REFERENCES.csv']
+
+###### ROLES
+roles_export_path = os.path.join(export_path, "ROLES.csv")
+roles_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.ROLES;"
+cursor.execute(roles_query)
+roles_file = cursor.fetchall()
+
+with open(roles_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in roles_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+subprocess.call(['git', 'add', roles_export_path])
+subprocess.call(['git', 'commit', '-m', f'ROLES.csv']
+
+###### SESSION POLICIES
+SP_export_path = os.path.join(export_path, "SESSION_POLICIES.csv")
+SP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSION_POLICIES;"
+cursor.execute(SP_query)
+SP_file = cursor.fetchall()
+
+with open(SP_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in SP_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+subprocess.call(['git', 'add', SP_export_path])
+subprocess.call(['git', 'commit', '-m', f'SESSION_POLICIES.csv']
+
+
+###### SESSIONS
+#SESSIONS DATA IS MORE THAN GIT WILL ALLOW WITH .COM LICENSE - BUT WE MAY NOT WANT THIS ANYWAY
+SESSIONS_export_path = os.path.join(export_path, "SESSIONS.csv")
+SESSIONS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSIONS;"
+cursor.execute(SESSIONS_query)
+SESSIONS_file = cursor.fetchall()
+
+with open(SESSIONS_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in SESSIONS_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+subprocess.call(['git', 'add', SESSIONS_export_path])
+subprocess.call(['git', 'commit', '-m', f'SESSIONS.csv']
+
+###### USERS     
+USERS_export_path = os.path.join(export_path, "USERS.csv")
+USERS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.USERS;"
+cursor.execute(USERS_query)
+USERS_file = cursor.fetchall()
+
+with open(USERS_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in USERS_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+subprocess.call(['git', 'add', USERS_export_path])
+subprocess.call(['git', 'commit', '-m', f'USERS.csv']
 
 # Export databases and artifacts - delivered databases contain some items that cannot be exported out
 db_query = f"select * from information_schema.databases where database_NAME not like 'SNOWFLAKE%' AND TYPE = 'STANDARD';"
