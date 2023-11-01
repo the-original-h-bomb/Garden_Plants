@@ -87,7 +87,28 @@ for db in databases:
 
         with open(schema_export_path, 'w') as schema_file:
             schema_file.write(schema_create_statement)
-    
+
+###### Export alerts
+        alert_query = f"SHOW ALERTS IN SCHEMA {db_name}.{schema_name}"
+        cursor.execute(alert_query)
+        alerts = cursor.fetchall()
+
+        for alert in alerts:
+            alert_name = alert[1]
+            alert_folder_path = s.path.join(schema_folder_path, "ALERTS")
+            os.makedirs(alert_folder_path, exist_ok=True)
+            alert_export_path = os.path.join(alert_folder_path, alert_name + ".sql")
+            alert_export_query = f"SELECT GET_DDL('ALERT','{db_name}.{schema_name}.{alert_name}')"
+            cursor.execute(alert_export_query)
+            alert_create_statement = cursor.fetchone()[0]
+
+            with open(alert_export_path, 'w') as alert_file:
+                alert_file.write(alert_create_statement)    
+
+            # Commit Tables to GitHub
+            subprocess.call(['git', 'add', alert_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {alert_name} DDL'])
+            
 ###### Export tables
         table_query = f"SHOW TABLES IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(table_query)
