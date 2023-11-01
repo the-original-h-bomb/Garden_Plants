@@ -1,6 +1,7 @@
 import snowflake.connector
 import subprocess
 import os
+import csv
 
 # Retrieve secrets from GitHub Actions environment variables
 account = os.environ.get("SF_PRD_ACCOUNT")
