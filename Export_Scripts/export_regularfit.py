@@ -56,7 +56,7 @@ databases = cursor.fetchall()
 
 for db in databases:
     db_name = db[0]
-    os.makedirs(os.path.join(folder_path, db_name), exist_ok=True)
+    os.makedirs(os.path.join(folder_path, "DB_"+db_name), exist_ok=True)
     db_export_path = os.path.join(folder_path, db_name)
     db_ddl_export_path = os.path.join(db_export_path, db_name + ".sql")
     db_export_query = f"SELECT GET_DDL('DATABASE','{db_name}')"
