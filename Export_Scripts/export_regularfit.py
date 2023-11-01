@@ -56,7 +56,7 @@ databases = cursor.fetchall()
 for db in databases:
     db_name = db[0]
     os.makedirs(os.path.join(folder_path, db_name), exist_ok=True)
-    db_ddl_export_path = os.path.join(folder_path, db_name, db_name + ".sql")
+    db_export_path = os.path.join(folder_path, db_name, db_name + ".sql")
     db_export_query = f"SELECT GET_DDL('DATABASE','{db_name}')"
     cursor.execute(db_export_query)
     db_create_statement = cursor.fetchone()[0]
@@ -65,5 +65,27 @@ for db in databases:
         db_file.write(db_create_statement)
 
     # Commit to GitHub
-    subprocess.call(['git', 'add', db_ddl_export_path])
+    subprocess.call(['git', 'add', db_export_path])
     subprocess.call(['git', 'commit', '-m', f'Commit {db_name} DDL'])
+
+    # Export schemas
+    schema_query = f"select * from  {db_name}.information_schema.schemata " \
+                   f"where schema_name not in ('SCHEMACHANGE', 'INFORMATION_SCHEMA')"
+    cursor.execute(schema_query)
+    schemas = cursor.fetchall()
+
+    for schema in schemas:
+        schema_name = schema[1]
+        schema_export_path = os.path.join(db_export_path, schema_name)
+        os.makedirs(schema_export_path, exist_ok=True)
+        schema_ddl_export_path = os.path.join(schema_export_path, schema_name + ".sql")
+        schema_export_query = f"SELECT GET_DDL('SCHEMA','{db_name}.{schema_name}')"
+        cursor.execute(schema_export_query)
+        schema_create_statement = cursor.fetchone()[0]
+
+        with open(schema_ddl_export_path, 'w') as schema_file:
+            schema_file.write(schema_create_statement)
+    
+    # Commit Schemas to GitHub
+    subprocess.call(['git', 'add', schema_ddl_export_path])
+    subprocess.call(['git', 'commit', '-m', f'Commit {schema_name} DDL'])
