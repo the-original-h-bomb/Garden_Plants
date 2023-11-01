@@ -26,6 +26,23 @@ cursor = conn.cursor()
 use_db_query = 'Use database garden_plants;'
 cursor.execute(use_db_query)
 
+### security table dump ####
+
+gtr_export_path = os.path.join(folder_path, "GRANTS_TO_ROLES.csv")
+gtr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES;"
+cursor.execute(gtr_query)
+gtr_file = cursor.fetchall()
+
+with open(gtr_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in gtr_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+    subprocess.call(['git', 'add', gtr_export_path])
+    subprocess.call(['git', 'commit', '-m', f'GRANTS_TO_ROLES.csv'])
+
 # Export databases and artifacts - delivered databases contain some items that cannot be exported out
 db_query = f"select * from information_schema.databases where database_NAME not like 'SNOWFLAKE%' AND TYPE = 'STANDARD';"
 
