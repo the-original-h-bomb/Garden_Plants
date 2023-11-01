@@ -56,7 +56,8 @@ databases = cursor.fetchall()
 for db in databases:
     db_name = db[0]
     os.makedirs(os.path.join(folder_path, db_name), exist_ok=True)
-    db_export_path = os.path.join(folder_path, db_name, db_name + ".sql")
+    db_export_path = os.path.join(folder_path, db_name)
+    db_ddl_export_path = os.path.join(db_export_path, db_name + ".sql")
     db_export_query = f"SELECT GET_DDL('DATABASE','{db_name}')"
     cursor.execute(db_export_query)
     db_create_statement = cursor.fetchone()[0]
@@ -65,7 +66,7 @@ for db in databases:
         db_file.write(db_create_statement)
 
     # Commit to GitHub
-    subprocess.call(['git', 'add', db_export_path])
+    subprocess.call(['git', 'add', db_ddl_export_path])
     subprocess.call(['git', 'commit', '-m', f'Commit {db_name} DDL'])
 
     # Export schemas
