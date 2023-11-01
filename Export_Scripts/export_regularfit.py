@@ -257,7 +257,8 @@ for db in databases:
             # Commit Tables to GitHub
             subprocess.call(['git', 'add', dynamic_table_export_path])
             subprocess.call(['git', 'commit', '-m', f'Commit {dynamic_table_name} DDL'])
-            
+
+``` get_ddl doesn't work with event tables ... research
 ###### Export Event Tables
         event_table_query = f"SHOW EVENT TABLES IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(event_table_query)
@@ -278,7 +279,8 @@ for db in databases:
             # Commit Tables to GitHub
             subprocess.call(['git', 'add', event_table_export_path])
             subprocess.call(['git', 'commit', '-m', f'Commit {event_table_name} DDL'])
-        
+```
+
 ###### Export External Tables
         external_table_query = f"SHOW EXTERNAL TABLES IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(external_table_query)
