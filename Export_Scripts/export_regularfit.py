@@ -88,10 +88,6 @@ for db in databases:
         with open(schema_export_path, 'w') as schema_file:
             schema_file.write(schema_create_statement)
     
-        # Commit Schemas to GitHub
-        subprocess.call(['git', 'add', schema_export_path])
-        subprocess.call(['git', 'commit', '-m', f'Commit {schema_name} DDL'])
-
         # Export tables
         table_query = f"SHOW TABLES IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(table_query)
@@ -109,6 +105,10 @@ for db in databases:
             with open(table_export_path, 'w') as table_file:
                 table_file.write(table_create_statement)
        
-        # Commit Tables to GitHub
-        subprocess.call(['git', 'add', table_export_path])
-        subprocess.call(['git', 'commit', '-m', f'Commit {table_name} DDL'])
+            # Commit Tables to GitHub
+            subprocess.call(['git', 'add', table_export_path])
+            subprocess.call(['git', 'commit', '-m', f'Commit {table_name} DDL'])
+
+    # Commit Schemas to GitHub
+    subprocess.call(['git', 'add', schema_export_path])
+    subprocess.call(['git', 'commit', '-m', f'Commit {schema_name} DDL'])
