@@ -310,8 +310,8 @@ for db in databases:
         for file_format in file_formats:
             file_format_name = file_format[1]
             file_format_folder_path = os.path.join(schema_folder_path, "FILE_FORMATS")
-            os.makedirs(external_table_folder_path, exist_ok=True)
-            file_format_export_path = os.path.join(file_formats_folder_path, file_format_name + ".sql")
+            os.makedirs(file_format_folder_path, exist_ok=True)
+            file_format_export_path = os.path.join(file_format_folder_path, file_format_name + ".sql")
             file_format_export_query = f"SELECT GET_DDL('FILE FORMATS','{db_name}.{schema_name}.{file_format_name}')"
             cursor.execute(file_format_export_query)
             file_format_create_statement = cursor.fetchone()[0]
