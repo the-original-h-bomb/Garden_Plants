@@ -430,7 +430,7 @@ for db in databases:
             tag_name = tag[1]
             tag_folder_path = os.path.join(schema_folder_path, "TAGS")
             os.makedirs(tag_folder_path, exist_ok=True)
-            tag_export_path = os.path.join(tags_folder_path, tag_name + ".sql")
+            tag_export_path = os.path.join(tag_folder_path, tag_name + ".sql")
             tag_export_query = f"SELECT GET_DDL('TAG','{db_name}.{schema_name}.{tag_name}')"
             cursor.execute(tag_export_query)
             tag_create_statement = cursor.fetchone()[0]
