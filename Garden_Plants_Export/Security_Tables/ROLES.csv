@@ -1,8 +1,8 @@
 ROLE_ID,CREATED_ON,DELETED_ON,NAME,COMMENT,OWNER,ROLE_TYPE,ROLE_DATABASE_NAME,ROLE_INSTANCE_ID
-5,2023-10-19 09:47:54.496000-08:00,,USERADMIN,,,ROLE,,
 2,2023-10-19 09:47:54.482000-08:00,,ACCOUNTADMIN,Account administrator can manage all aspects of the account.,,ROLE,,
+1,2023-10-19 09:47:54.464000-08:00,,PUBLIC,Public role is automatically available to every user in the account.,,ROLE,,
 3,2023-10-19 09:47:54.486000-08:00,,SECURITYADMIN,Security administrator can manage security aspects of the account.,,ROLE,,
 4,2023-10-19 09:47:54.491000-08:00,,SYSADMIN,System administrator can create and manage databases and warehouses.,,ROLE,,
-1,2023-10-19 09:47:54.464000-08:00,,PUBLIC,Public role is automatically available to every user in the account.,,ROLE,,
 6,2023-10-19 09:47:54.662000-08:00,,ORGADMIN,Organization administrator can manage organizations and accounts in organizations,,ROLE,,
 21,2023-11-02 11:40:22.664000-08:00,,TEST,,ACCOUNTADMIN,ROLE,,
+5,2023-10-19 09:47:54.496000-08:00,,USERADMIN,,,ROLE,,
