@@ -561,7 +561,7 @@ for db in databases:
             
             # Commit to GitHub
             subprocess.call(['git', 'add', tasks_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {task_name} DDL'])
+            subprocess.call(['git', 'commit', '-m', f'Commit {tasks_name} DDL'])
 
         
 ###### Export User Defined Functions
