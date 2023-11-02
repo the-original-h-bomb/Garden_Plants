@@ -443,7 +443,7 @@ for db in databases:
             sequence_name = sequence[1]
             sequence_folder_path = os.path.join(schema_folder_path, "SEQUENCES")
             os.makedirs(sequence_folder_path, exist_ok=True)
-            sequence_export_path = os.path.join(sequences_folder_path, sequence_name + ".sql")
+            sequence_export_path = os.path.join(sequence_folder_path, sequence_name + ".sql")
             sequence_export_query = f"SELECT GET_DDL('SEQUENCES','{db_name}.{schema_name}.{sequence_name}')"
             cursor.execute(sequence_export_query)
             sequence_create_statement = cursor.fetchone()[0]
