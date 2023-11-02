@@ -74,6 +74,22 @@ with open(lh_export_path, mode='w', newline='') as file:
 subprocess.call(['git', 'add', lh_export_path])
 subprocess.call(['git', 'commit', '-m', f'LOGIN_HISTORY.csv'])
 
+###### MASKING POLICIES
+MP_export_path = os.path.join(folder_path, 'Security_Tables', "MASKING_POLICIES.csv")
+MP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES;"
+cursor.execute(MP_query)
+MP_file = cursor.fetchall()
+
+with open(MP_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in MP_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+subprocess.call(['git', 'add', MP_export_path])
+subprocess.call(['git', 'commit', '-m', f'MASKING_POLICIES.csv'])
+
 ###### PASSWORD POLICIES
 PP_export_path = os.path.join(folder_path, 'Security_Tables', "PASSWORD_POLICIES.csv")
 PP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.PASSWORD_POLICIES;"
@@ -121,6 +137,22 @@ with open(roles_export_path, mode='w', newline='') as file:
 # Commit to GitHub
 subprocess.call(['git', 'add', roles_export_path])
 subprocess.call(['git', 'commit', '-m', f'ROLES.csv'])
+
+###### ROW ACCESS POLICIES
+RAP_export_path = os.path.join(folder_path, 'Security_Tables', "ROW_ACCESS_POLICIES.csv")
+RAP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.ROW_ACCESS_POLICIES;"
+cursor.execute(RAP_query)
+RAP_file = cursor.fetchall()
+
+with open(RAP_export_path, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([x[0] for x in cursor.description])  # write header
+    for row in RAP_file:
+        writer.writerow(row)
+
+# Commit to GitHub
+subprocess.call(['git', 'add', RAP_export_path])
+subprocess.call(['git', 'commit', '-m', f'ROW_ACCESS_POLICIES.csv'])
 
 ###### SESSION POLICIES
 SP_export_path = os.path.join(folder_path, 'Security_Tables', "SESSION_POLICIES.csv")
@@ -345,94 +377,6 @@ for db in databases:
             # Commit Tables to GitHub
             subprocess.call(['git', 'add', pipe_export_path])
             subprocess.call(['git', 'commit', '-m', f'Commit {pipe_name} DDL'])
-
-###### Export Policies (masking, password, row access and session)
-        policies_folder_path = os.path.join(schema_folder_path, "POLICIES")
-        os.makedirs(policies_folder_path, exist_ok=True)
-###### masking policies
-        masking_policies_query = f"SHOW MASKING POLICIES IN SCHEMA {db_name}.{schema_name}"
-        cursor.execute(masking_policies_query)
-        mpolicies = cursor.fetchall()        
-
-        for mpolicy in mpolicies:
-            mpolicy_name = mpolicy[1]
-            mpolicy_folder_path = os.path.join(policies_folder_path, "MASKING")
-            os.makedirs(mpolicy_folder_path, exist_ok=True)
-            mpolicy_export_path = os.path.join(mpolicy_folder_path, mpolicy_name + ".sql")
-            mpolicy_export_query = f"SELECT GET_DDL('POLICY','{db_name}.{schema_name}.{mpolicy_name}')"
-            cursor.execute(mpolicy_export_query)
-            mpolicy_create_statement = cursor.fetchone()[0]
-
-            with open(mpolicy_export_path, 'w') as mpolicy_file:
-                mpolicy_file.write(mpolicy_create_statement)
-
-            # Commit to GitHub
-            subprocess.call(['git', 'add', mpolicy_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {mpolicy_name} DDL'])
-            
-###### password policies
-        password_policies_query = f"SHOW PASSWORD POLICIES IN SCHEMA {db_name}.{schema_name}"
-        cursor.execute(password_policies_query)
-        ppolicies = cursor.fetchall()
-
-        for ppolicy in ppolicies:
-            ppolicy_name = ppolicy[1]
-            ppolicy_folder_path = os.path.join(policies_folder_path, "PASSWORD")
-            os.makedirs(ppolicy_folder_path, exist_ok=True)
-            ppolicy_export_path = os.path.join(ppolicy_folder_path, ppolicy_name + ".sql")
-            ppolicy_export_query = f"SELECT GET_DDL('POLICIES','{db_name}.{schema_name}.{ppolicy_name}')"
-            cursor.execute(ppolicy_export_query)
-            ppolicy_create_statement = cursor.fetchone()[0]
-
-            with open(ppolicy_export_path, 'w') as ppolicy_file:
-                ppolicy_file.write(ppolicy_create_statement)
-            
-            # Commit to GitHub
-            subprocess.call(['git', 'add', ppolicy_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {ppolicy_name} DDL'])
-
-        
-###### row access policies
-        row_access_policies_query = f"SHOW ROW ACCESS POLICIES IN SCHEMA {db_name}.{schema_name}"
-        cursor.execute(row_access_policies_query)
-        rapolicies = cursor.fetchall()
-
-        for rapolicy in rapolicies:
-            rapolicy_name = rapolicy[1]
-            rapolicy_folder_path = os.path.join(policies_folder_path, "ROW_ACCESS")
-            os.makedirs(rapolicy_folder_path, exist_ok=True)
-            rapolicy_export_path = os.path.join(rapolicy_folder_path, rapolicy_name + ".sql")
-            rapolicy_export_query = f"SELECT GET_DDL('POLICIES','{db_name}.{schema_name}.{rapolicy_name}')"
-            cursor.execute(rapolicy_export_query)
-            rapolicy_create_statement = cursor.fetchone()[0]
-
-            with open(rapolicy_export_path, 'w') as rapolicy_file:
-                rapolicy_file.write(rapolicy_create_statement)
-
-            # Commit to GitHub
-            subprocess.call(['git', 'add', rapolicy_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {rapolicy_name} DDL'])
-        
-###### session policies
-        session_policies_query = f"SHOW SESSION POLICIES IN SCHEMA {db_name}.{schema_name}"
-        cursor.execute(session_policies_query)
-        spolicies = cursor.fetchall()
-
-        for spolicy in spolicies:
-            spolicy_name = spolicy[1]
-            spolicy_folder_path = os.path.join(policies_folder_path, "SESSION")
-            os.makedirs(spolicy_folder_path, exist_ok=True)
-            spolicy_export_path = os.path.join(spolicy_folder_path, spolicy_name + ".sql")
-            spolicy_export_query = f"SELECT GET_DDL('POLICIES','{db_name}.{schema_name}.{spolicy_name}')"
-            cursor.execute(spolicy_export_query)
-            spolicy_create_statement = cursor.fetchone()[0]
-
-            with open(spolicy_export_path, 'w') as spolicy_file:
-                spolicy_file.write(spolicy_create_statement)
-
-            # Commit to GitHub
-            subprocess.call(['git', 'add', spolicy_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {spolicy_name} DDL'])
 
 # get_ddl doesn't work with this object ... research other options to extract
 ###### Export Sequences
