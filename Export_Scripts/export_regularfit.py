@@ -302,26 +302,27 @@ for db in databases:
             subprocess.call(['git', 'add', external_table_export_path])
             subprocess.call(['git', 'commit', '-m', f'Commit {external_table_name} DDL'])
         
+# get_ddl doesn't work with event tables ... research
 ###### Export File Formats
-        file_formats_query = f"SHOW FILE FORMATS IN SCHEMA {db_name}.{schema_name}"
-        cursor.execute(file_formats_query)
-        file_formats = cursor.fetchall()
-
-        for file_format in file_formats:
-            file_format_name = file_format[1]
-            file_format_folder_path = os.path.join(schema_folder_path, "FILE_FORMATS")
-            os.makedirs(file_format_folder_path, exist_ok=True)
-            file_format_export_path = os.path.join(file_format_folder_path, file_format_name + ".sql")
-            file_format_export_query = f"SELECT GET_DDL('FILE FORMATS','{db_name}.{schema_name}.{file_format_name}')"
-            cursor.execute(file_format_export_query)
-            file_format_create_statement = cursor.fetchone()[0]
-
-            with open(file_format_export_path, 'w') as file_format_file:
-                file_format_file.write(file_format_create_statement)
-
-            # Commit Tables to GitHub
-            subprocess.call(['git', 'add', file_format_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {file_format_name} DDL'])
+#        file_formats_query = f"SHOW FILE FORMATS IN SCHEMA {db_name}.{schema_name}"
+#        cursor.execute(file_formats_query)
+#        file_formats = cursor.fetchall()
+#
+#        for file_format in file_formats:
+#            file_format_name = file_format[1]
+#            file_format_folder_path = os.path.join(schema_folder_path, "FILE_FORMATS")
+#            os.makedirs(file_format_folder_path, exist_ok=True)
+#            file_format_export_path = os.path.join(file_format_folder_path, file_format_name + ".sql")
+#            file_format_export_query = f"SELECT GET_DDL('FILE FORMATS','{db_name}.{schema_name}.{file_format_name}')"
+#            cursor.execute(file_format_export_query)
+#            file_format_create_statement = cursor.fetchone()[0]
+#
+#            with open(file_format_export_path, 'w') as file_format_file:
+#                file_format_file.write(file_format_create_statement)
+#
+#            # Commit Tables to GitHub
+#            subprocess.call(['git', 'add', file_format_export_path])
+#            subprocess.call(['git', 'commit', '-m', f'Commit {file_format_name} DDL'])
         
 ###### Export Pipes
 
