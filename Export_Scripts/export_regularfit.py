@@ -356,27 +356,6 @@ for db in databases:
             subprocess.call(['git', 'commit', '-m', f'Commit {pipe_name} DDL'])
 
 
-###### Export Sequences
-        sequences_query = f"SHOW SEQUENCES IN SCHEMA {db_name}.{schema_name}"
-        cursor.execute(sequences_query)
-        sequences = cursor.fetchall()
-
-        for sequence in sequences:
-            sequence_name = sequence[1]
-            sequence_folder_path = os.path.join(schema_folder_path, "SEQUENCES")
-            os.makedirs(sequence_folder_path, exist_ok=True)
-            sequence_export_path = os.path.join(sequence_folder_path, sequence_name + ".sql")
-            sequence_export_query = f"SELECT GET_DDL('SEQUENCE','{db_name}.{schema_name}.{sequence_name}')"
-            cursor.execute(sequence_export_query)
-            sequence_create_statement = cursor.fetchone()[0]
-
-            with open(sequence_export_path, 'w') as sequence_file:
-                sequence_file.write(sequence_create_statement)
-
-            # Commit to GitHub
-            subprocess.call(['git', 'add', sequence_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {sequence_name} DDL'])
-        
 ###### Export stored procedures
         sp_query = f"select * from {db_name}.information_schema.procedures where procedure_schema = '{schema_name}'"
         cursor.execute(sp_query)
