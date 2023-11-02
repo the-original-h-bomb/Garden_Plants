@@ -1,5 +1,7 @@
 create or replace schema VEGGIES;
 
+create or replace tag COST_CENTER COMMENT='cost_center tag'
+;
 create or replace sequence SEQ1 start with 1 increment by 1 order;
 create or replace TABLE LU_SOIL_TYPE (
 	SOIL_TYPE_ID NUMBER(38,0),
