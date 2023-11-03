@@ -30,7 +30,7 @@ os.makedirs(os.path.join(folder_path, 'Security_Tables'), exist_ok=True)
 
 ###### Grants to Roles
 gtr_export_path = os.path.join(folder_path, 'Security_Tables', "GRANTS_TO_ROLES.csv")
-gtr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES order by MODIFIED_ON desc;"
+gtr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES order by MODIFIED_ON, privilege, granted_on, name, granted_to desc;"
 cursor.execute(gtr_query)
 gtr_file = cursor.fetchall()
 
