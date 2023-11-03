@@ -1,0 +1,1 @@
+create or replace stream DATA_CHECK on table ROOT_DEPTH;
