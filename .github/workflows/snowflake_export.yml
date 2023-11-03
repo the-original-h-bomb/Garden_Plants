@@ -46,7 +46,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add Garden_Plants_Export/  # Specify the target directory.
+          git add Snowflake_Export/  # Specify the target directory.
           git diff-index --quiet HEAD || git commit -m "Update Snowflake DDL"  # Commit only if there are changes.
           git push origin main
         # This step configures Git, stages the specific directory, commits, and pushes it to the 'main' branch.
