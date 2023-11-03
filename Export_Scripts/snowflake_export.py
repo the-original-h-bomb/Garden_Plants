@@ -30,7 +30,7 @@ os.makedirs(os.path.join(folder_path, 'Security_Tables'), exist_ok=True)
 
 ###### Grants to Roles
 gtr_export_path = os.path.join(folder_path, 'Security_Tables', "GRANTS_TO_ROLES.csv")
-gtr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES;"
+gtr_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES order by MODIFIED_ON desc;"
 cursor.execute(gtr_query)
 gtr_file = cursor.fetchall()
 
@@ -42,7 +42,7 @@ with open(gtr_export_path, mode='w', newline='') as file:
 
 ###### Grants to Users
 gtu_export_path = os.path.join(folder_path, 'Security_Tables', "GRANTS_TO_USERS.csv")
-gtu_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS;"
+gtu_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS order by CREATED_ON desc;"
 cursor.execute(gtu_query)
 gtu_file = cursor.fetchall()
 
@@ -54,7 +54,7 @@ with open(gtu_export_path, mode='w', newline='') as file:
 
 ###### LOGIN HISTORY
 lh_export_path = os.path.join(folder_path, 'Security_Tables', "LOGIN_HISTORY.csv")
-lh_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY;"
+lh_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY order by EVENT_TIMESTAMP desc;"
 cursor.execute(lh_query)
 lh_file = cursor.fetchall()
 
@@ -66,7 +66,7 @@ with open(lh_export_path, mode='w', newline='') as file:
 
 ###### MASKING POLICIES
 MP_export_path = os.path.join(folder_path, 'Security_Tables', "MASKING_POLICIES.csv")
-MP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES;"
+MP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES order by LAST_ALTERED desc;"
 cursor.execute(MP_query)
 MP_file = cursor.fetchall()
 
@@ -78,7 +78,7 @@ with open(MP_export_path, mode='w', newline='') as file:
 
 ###### PASSWORD POLICIES
 PP_export_path = os.path.join(folder_path, 'Security_Tables', "PASSWORD_POLICIES.csv")
-PP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.PASSWORD_POLICIES;"
+PP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.PASSWORD_POLICIES ORDER BY LAST_ALTERED DESC;"
 cursor.execute(PP_query)
 PP_file = cursor.fetchall()
 
@@ -102,7 +102,7 @@ with open(pr_export_path, mode='w', newline='') as file:
 
 ###### ROLES
 roles_export_path = os.path.join(folder_path, 'Security_Tables', "ROLES.csv")
-roles_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.ROLES;"
+roles_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.ROLES ORDER BY CREATED_ON, DELETED_ON DESC;"
 cursor.execute(roles_query)
 roles_file = cursor.fetchall()
 
@@ -114,7 +114,7 @@ with open(roles_export_path, mode='w', newline='') as file:
 
 ###### ROW ACCESS POLICIES
 RAP_export_path = os.path.join(folder_path, 'Security_Tables', "ROW_ACCESS_POLICIES.csv")
-RAP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.ROW_ACCESS_POLICIES;"
+RAP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.ROW_ACCESS_POLICIES ORDER BY LAST_ALTERED DESC;"
 cursor.execute(RAP_query)
 RAP_file = cursor.fetchall()
 
@@ -126,7 +126,7 @@ with open(RAP_export_path, mode='w', newline='') as file:
 
 ###### SESSION POLICIES
 SP_export_path = os.path.join(folder_path, 'Security_Tables', "SESSION_POLICIES.csv")
-SP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSION_POLICIES;"
+SP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSION_POLICIES ORDER BY LAST_ALTERED DESC;"
 cursor.execute(SP_query)
 SP_file = cursor.fetchall()
 
@@ -139,7 +139,7 @@ with open(SP_export_path, mode='w', newline='') as file:
 ###### SESSIONS
 #SESSIONS DATA IS MORE THAN GIT WILL ALLOW WITH .COM LICENSE - BUT WE MAY NOT WANT THIS ANYWAY
 SESSIONS_export_path = os.path.join(folder_path, 'Security_Tables', "SESSIONS.csv")
-SESSIONS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSIONS;"
+SESSIONS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSIONS ORDER BY CREATED_ON DESC;"
 cursor.execute(SESSIONS_query)
 SESSIONS_file = cursor.fetchall()
 
@@ -151,7 +151,7 @@ with open(SESSIONS_export_path, mode='w', newline='') as file:
 
 ###### USERS     
 USERS_export_path = os.path.join(folder_path, 'Security_Tables', "USERS.csv")
-USERS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.USERS;"
+USERS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.USERS ORDER BY CREATED_ON DESC;"
 cursor.execute(USERS_query)
 USERS_file = cursor.fetchall()
 
