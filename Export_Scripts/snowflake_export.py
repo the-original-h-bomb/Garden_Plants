@@ -20,7 +20,7 @@ conn = snowflake.connector.connect(
 )
 
 # Specify the folder path within your repository for exports
-folder_path = 'Garden_Plants_Export'
+folder_path = 'Snowflake_Export'
 
 # Snowflake cursor
 cursor = conn.cursor()
