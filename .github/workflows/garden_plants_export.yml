@@ -2,7 +2,7 @@ name: garden_plants_export
 
 on:
   workflow_run:
-    workflows: ["garden_plants_deploy_to_production"]
+    #workflows: ["garden_plants_deploy_to_production"]
     types:
       - completed
       
