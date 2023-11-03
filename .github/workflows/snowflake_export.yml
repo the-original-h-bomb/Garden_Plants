@@ -47,6 +47,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add Snowflake_Export/  # Specify the target directory.
+          current_date_time=$(date +"%Y-%m-%d %H:%M:%S")
           git diff-index --quiet HEAD || git commit -m "Snowflake Export - $current_date_time"  # Commit only if there are changes.
           git push origin main
         # This step configures Git, stages the specific directory, commits, and pushes it to the 'main' branch.
