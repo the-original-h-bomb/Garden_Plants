@@ -40,10 +40,6 @@ with open(gtr_export_path, mode='w', newline='') as file:
     for row in gtr_file:
         writer.writerow(row)
 
-# Commit to GitHub
-subprocess.call(['git', 'add', gtr_export_path])
-subprocess.call(['git', 'commit', '-m', f'GRANTS_TO_ROLES.csv'])
-
 ###### Grants to Users
 gtu_export_path = os.path.join(folder_path, 'Security_Tables', "GRANTS_TO_USERS.csv")
 gtu_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS;"
@@ -55,9 +51,6 @@ with open(gtu_export_path, mode='w', newline='') as file:
     writer.writerow([x[0] for x in cursor.description])  # write header
     for row in gtu_file:
         writer.writerow(row)
-# Commit to GitHub
-subprocess.call(['git', 'add', gtu_export_path])
-subprocess.call(['git', 'commit', '-m', f'GRANTS_TO_USERS.csv'])
 
 ###### LOGIN HISTORY
 lh_export_path = os.path.join(folder_path, 'Security_Tables', "LOGIN_HISTORY.csv")
@@ -70,9 +63,6 @@ with open(lh_export_path, mode='w', newline='') as file:
     writer.writerow([x[0] for x in cursor.description])  # write header
     for row in lh_file:
         writer.writerow(row)
-# Commit to GitHub
-subprocess.call(['git', 'add', lh_export_path])
-subprocess.call(['git', 'commit', '-m', f'LOGIN_HISTORY.csv'])
 
 ###### MASKING POLICIES
 MP_export_path = os.path.join(folder_path, 'Security_Tables', "MASKING_POLICIES.csv")
@@ -86,10 +76,6 @@ with open(MP_export_path, mode='w', newline='') as file:
     for row in MP_file:
         writer.writerow(row)
 
-# Commit to GitHub
-subprocess.call(['git', 'add', MP_export_path])
-subprocess.call(['git', 'commit', '-m', f'MASKING_POLICIES.csv'])
-
 ###### PASSWORD POLICIES
 PP_export_path = os.path.join(folder_path, 'Security_Tables', "PASSWORD_POLICIES.csv")
 PP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.PASSWORD_POLICIES;"
@@ -101,10 +87,6 @@ with open(PP_export_path, mode='w', newline='') as file:
     writer.writerow([x[0] for x in cursor.description])  # write header
     for row in PP_file:
         writer.writerow(row)
-
-# Commit to GitHub
-subprocess.call(['git', 'add', PP_export_path])
-subprocess.call(['git', 'commit', '-m', f'PASSWORD_POLICIES.csv'])
 
 ###### POLICY REFERENCES
 pr_export_path = os.path.join(folder_path, 'Security_Tables', "POLICY_REFERENCES.csv")
@@ -118,10 +100,6 @@ with open(pr_export_path, mode='w', newline='') as file:
     for row in pr_file:
         writer.writerow(row)
 
-# Commit to GitHub
-subprocess.call(['git', 'add', pr_export_path])
-subprocess.call(['git', 'commit', '-m', f'POLICY_REFERENCES.csv'])
-
 ###### ROLES
 roles_export_path = os.path.join(folder_path, 'Security_Tables', "ROLES.csv")
 roles_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.ROLES;"
@@ -133,10 +111,6 @@ with open(roles_export_path, mode='w', newline='') as file:
     writer.writerow([x[0] for x in cursor.description])  # write header
     for row in roles_file:
         writer.writerow(row)
-
-# Commit to GitHub
-subprocess.call(['git', 'add', roles_export_path])
-subprocess.call(['git', 'commit', '-m', f'ROLES.csv'])
 
 ###### ROW ACCESS POLICIES
 RAP_export_path = os.path.join(folder_path, 'Security_Tables', "ROW_ACCESS_POLICIES.csv")
@@ -150,10 +124,6 @@ with open(RAP_export_path, mode='w', newline='') as file:
     for row in RAP_file:
         writer.writerow(row)
 
-# Commit to GitHub
-subprocess.call(['git', 'add', RAP_export_path])
-subprocess.call(['git', 'commit', '-m', f'ROW_ACCESS_POLICIES.csv'])
-
 ###### SESSION POLICIES
 SP_export_path = os.path.join(folder_path, 'Security_Tables', "SESSION_POLICIES.csv")
 SP_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.SESSION_POLICIES;"
@@ -165,11 +135,6 @@ with open(SP_export_path, mode='w', newline='') as file:
     writer.writerow([x[0] for x in cursor.description])  # write header
     for row in SP_file:
         writer.writerow(row)
-
-# Commit to GitHub
-subprocess.call(['git', 'add', SP_export_path])
-subprocess.call(['git', 'commit', '-m', f'SESSION_POLICIES.csv'])
-
 
 ###### SESSIONS
 #SESSIONS DATA IS MORE THAN GIT WILL ALLOW WITH .COM LICENSE - BUT WE MAY NOT WANT THIS ANYWAY
@@ -184,10 +149,6 @@ with open(SESSIONS_export_path, mode='w', newline='') as file:
     for row in SESSIONS_file:
         writer.writerow(row)
 
-# Commit to GitHub
-subprocess.call(['git', 'add', SESSIONS_export_path])
-subprocess.call(['git', 'commit', '-m', f'SESSIONS.csv'])
-
 ###### USERS     
 USERS_export_path = os.path.join(folder_path, 'Security_Tables', "USERS.csv")
 USERS_query = f"SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.USERS;"
@@ -199,10 +160,6 @@ with open(USERS_export_path, mode='w', newline='') as file:
     writer.writerow([x[0] for x in cursor.description])  # write header
     for row in USERS_file:
         writer.writerow(row)
-
-# Commit to GitHub
-subprocess.call(['git', 'add', USERS_export_path])
-subprocess.call(['git', 'commit', '-m', f'USERS.csv'])
 
 ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### 
 ###### Export databases and artifacts - delivered databases contain some items that cannot be exported out
@@ -225,10 +182,6 @@ for db in databases:
 
     with open(db_ddl_export_path, 'w') as db_file:
         db_file.write(db_create_statement)
-
-    # Commit to GitHub
-    subprocess.call(['git', 'add', db_ddl_export_path])
-    subprocess.call(['git', 'commit', '-m', f'Commit {db_name} DDL'])
 
 ###### Export schemas
     schema_query = f"select * from  {db_name}.information_schema.schemata " \
@@ -265,10 +218,6 @@ for db in databases:
             with open(alert_export_path, 'w') as alert_file:
                 alert_file.write(alert_create_statement)    
 
-            # Commit Tables to GitHub
-            subprocess.call(['git', 'add', alert_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {alert_name} DDL'])
-
 ###### Export dynamic_tables
         dynamic_table_query = f"SHOW DYNAMIC TABLES IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(dynamic_table_query)
@@ -286,10 +235,6 @@ for db in databases:
             with open(dynamic_table_export_path, 'w') as dynamic_table_file:
                 dynamic_table_file.write(dynamic_table_create_statement)
             
-            # Commit Tables to GitHub
-            subprocess.call(['git', 'add', dynamic_table_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {dynamic_table_name} DDL'])
-
 ###### Export External Tables
         external_table_query = f"SHOW EXTERNAL TABLES IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(external_table_query)
@@ -306,12 +251,7 @@ for db in databases:
 
             with open(external_table_export_path, 'w') as external_table_file:
                 external_table_file.write(external_table_create_statement)
-            
-            # Commit Tables to GitHub
-            subprocess.call(['git', 'add', external_table_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {external_table_name} DDL'])
-        
-
+                        
 ###### Export File Formats
         file_formats_query = f"SHOW FILE FORMATS IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(file_formats_query)
@@ -328,10 +268,6 @@ for db in databases:
 
             with open(file_format_export_path, 'w') as file_format_file:
                 file_format_file.write(file_format_create_statement)
-
-            # Commit Tables to GitHub
-            subprocess.call(['git', 'add', file_format_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {file_format_name} DDL'])
         
 ###### Export Pipes
 
@@ -350,11 +286,6 @@ for db in databases:
 
             with open(pipe_export_path, 'w') as pipe_file:
                 pipe_file.write(pipe_create_statement)
-            
-            # Commit Tables to GitHub
-            subprocess.call(['git', 'add', pipe_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {pipe_name} DDL'])
-
 
 ###### Export stored procedures
         sp_query = f"select * from {db_name}.information_schema.procedures where procedure_schema = '{schema_name}'"
@@ -374,10 +305,6 @@ for db in databases:
         
             with open(sp_export_path, 'w') as sp_file:
                 sp_file.write(sp_create_statement)
-            
-            # Commit to GitHub
-            subprocess.call(['git', 'add', sp_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {sp_name} DDL'])
 
 ###### Export streams
         streams_query = f"SHOW STREAMS IN SCHEMA {db_name}.{schema_name};"
@@ -396,10 +323,6 @@ for db in databases:
             with open(streams_export_path, 'w') as streams_file:
                 streams_file.write(streams_create_statement)
 
-            # Commit Tables to GitHub
-            subprocess.call(['git', 'add', streams_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {streams_name} DDL'])
-
 ###### Export tables
         table_query = f"SHOW TABLES IN SCHEMA {db_name}.{schema_name}"
         cursor.execute(table_query)
@@ -416,10 +339,6 @@ for db in databases:
 
             with open(table_export_path, 'w') as table_file:
                 table_file.write(table_create_statement)
-       
-            # Commit Tables to GitHub
-            subprocess.call(['git', 'add', table_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {table_name} DDL'])
 
 ###### Export Tags
         tags_query = f"SHOW TAGS IN SCHEMA {db_name}.{schema_name}"
@@ -438,10 +357,6 @@ for db in databases:
             with open(tag_export_path, 'w') as tag_file:
                 tag_file.write(tag_create_statement)
 
-            # Commit to GitHub
-            subprocess.call(['git', 'add', tag_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {tag_name} DDL'])
-
 ###### Export tasks
         tasks_query = f"SHOW TASKS IN SCHEMA {db_name}.{schema_name};"
         cursor.execute(tasks_query)
@@ -458,11 +373,6 @@ for db in databases:
 
             with open(tasks_export_path, 'w') as tasks_file:
                 tasks_file.write(tasks_create_statement)
-            
-            # Commit to GitHub
-            subprocess.call(['git', 'add', tasks_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {tasks_name} DDL'])
-
         
 ###### Export User Defined Functions
 
@@ -483,11 +393,6 @@ for db in databases:
 
             with open(function_export_path, 'w') as function_file:
                 function_file.write(function_create_statement)   
-
-            # Commit to GitHub
-            subprocess.call(['git', 'add', function_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {function_name} DDL'])
-        
         
 ###### Export views
         view_query = f"SHOW VIEWS IN SCHEMA {db_name}.{schema_name}"
@@ -505,12 +410,4 @@ for db in databases:
 
             with open(view_export_path, 'w') as view_file:
                 view_file.write(view_create_statement)
-            
-            # Commit Views to GitHub
-            subprocess.call(['git', 'add', view_export_path])
-            subprocess.call(['git', 'commit', '-m', f'Commit {view_name} DDL'])
-
-##############    
-    # Commit Schemas to GitHub
-    subprocess.call(['git', 'add', schema_export_path])
-    subprocess.call(['git', 'commit', '-m', f'Commit {schema_name} DDL'])
+ 
