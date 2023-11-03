@@ -1,4 +1,4 @@
-name: garden_plants_export
+name: snowflake_export
 
 on:
   workflow_run:
