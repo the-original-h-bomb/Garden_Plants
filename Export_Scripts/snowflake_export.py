@@ -301,7 +301,7 @@ for db in databases:
                 sp_arg_substring = f"({sp_arg})"
             sp_folder_path = os.path.join(schema_folder_path, "STORED_PROCEDURES")
             os.makedirs(sp_folder_path, exist_ok=True)
-            sp_export_path = os.path.join(sp_folder_path, sp_name + ".sql")
+            sp_export_path = os.path.join(sp_folder_path, sp_name + sp_arg_substring + ".sql")
             sp_export_query = f"SELECT GET_DDL('PROCEDURE', '{db_name}.{schema_name}.{sp_name}{sp_arg_substring}')"
             cursor.execute(sp_export_query)
             sp_create_statement = cursor.fetchone()[0]
