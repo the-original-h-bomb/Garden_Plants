@@ -46,6 +46,13 @@ create or replace TABLE ROOT_DEPTH (
 	RANGE_MIN NUMBER(2,0),
 	RANGE_MAX NUMBER(2,0)
 );
+create or replace dynamic table ROOT_DEPTH_DT(
+	ROOT_DEPTH_ID,
+	ROOT_DEPTH_CODE,
+	ROOT_DEPTH_NAME
+) lag = '2 minutes' warehouse = COMPUTE_WH
+ as
+SELECT ROOT_DEPTH_ID, ROOT_DEPTH_CODE, ROOT_DEPTH_NAME FROM VEGGIES.ROOT_DEPTH;
 create or replace TABLE TABLE1 (
 	ID NUMBER(38,0),
 	ID2 NUMBER(38,0),
@@ -143,7 +150,7 @@ create or replace dynamic table VISITORS_DT(
 	ID,
 	FIRST_NAME,
 	LAST_NAME
-) lag = '1 minute' warehouse = COMPUTE_WH
+) lag = '5 minutes' warehouse = COMPUTE_WH
  as
 SELECT var:id::int id, var:fname::string first_name,
 var:lname::string last_name FROM raw;
