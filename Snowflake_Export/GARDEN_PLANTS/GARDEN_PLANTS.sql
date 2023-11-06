@@ -1,5 +1,20 @@
 create or replace database GARDEN_PLANTS;
 
+create or replace schema PUBLIC;
+
+create or replace schema SCHEMACHANGE;
+
+create or replace TABLE CHANGE_HISTORY (
+	VERSION VARCHAR(16777216),
+	DESCRIPTION VARCHAR(16777216),
+	SCRIPT VARCHAR(16777216),
+	SCRIPT_TYPE VARCHAR(16777216),
+	CHECKSUM VARCHAR(16777216),
+	EXECUTION_TIME NUMBER(38,0),
+	STATUS VARCHAR(16777216),
+	INSTALLED_BY VARCHAR(16777216),
+	INSTALLED_ON TIMESTAMP_LTZ(9)
+);
 create or replace schema VEGGIES;
 
 create or replace tag COST_CENTER COMMENT='cost_center tag'
@@ -149,6 +164,7 @@ LANGUAGE SQL
 EXECUTE AS CALLER
 AS 'select''Hello, this is a simple stored procedure in Snowflake.'';';
 create or replace stream DATA_CHECK on table ROOT_DEPTH;
+create or replace stream RAWSTREAM1 on table "GARDEN_PLANTS.VEGGIES.RAW";
 create or replace task RAW_TO_NAMES
 	warehouse=COMPUTE_WH
 	schedule='1 minute'
@@ -165,3 +181,11 @@ UPDATE SET n.first_name = r1.fname, n.last_name = r1.lname
 WHEN NOT MATCHED AND metadata$action = 'INSERT' THEN
 INSERT (id, first_name, last_name)
 VALUES (r1.id, r1.fname, r1.lname);
+create or replace alert MYALERT
+	warehouse=COMPUTE_WH
+	schedule='1 minute'
+	if (exists(
+		SELECT gauge_value FROM gauge WHERE gauge_value>200
+	))
+	then
+	INSERT INTO gauge_value_exceeded_history VALUES (current_timestamp());

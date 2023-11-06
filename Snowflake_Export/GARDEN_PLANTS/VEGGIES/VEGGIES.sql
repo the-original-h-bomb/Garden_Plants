@@ -147,6 +147,7 @@ LANGUAGE SQL
 EXECUTE AS CALLER
 AS 'select''Hello, this is a simple stored procedure in Snowflake.'';';
 create or replace stream DATA_CHECK on table ROOT_DEPTH;
+create or replace stream RAWSTREAM1 on table "GARDEN_PLANTS.VEGGIES.RAW";
 create or replace task RAW_TO_NAMES
 	warehouse=COMPUTE_WH
 	schedule='1 minute'
@@ -163,3 +164,11 @@ UPDATE SET n.first_name = r1.fname, n.last_name = r1.lname
 WHEN NOT MATCHED AND metadata$action = 'INSERT' THEN
 INSERT (id, first_name, last_name)
 VALUES (r1.id, r1.fname, r1.lname);
+create or replace alert MYALERT
+	warehouse=COMPUTE_WH
+	schedule='1 minute'
+	if (exists(
+		SELECT gauge_value FROM gauge WHERE gauge_value>200
+	))
+	then
+	INSERT INTO gauge_value_exceeded_history VALUES (current_timestamp());
