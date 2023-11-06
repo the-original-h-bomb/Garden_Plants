@@ -158,6 +158,23 @@ CREATE OR REPLACE FILE FORMAT MY_CSV_FORMAT
 	NULL_IF = ('NULL', 'null')
 	COMPRESSION = gzip
 ;
+CREATE OR REPLACE PROCEDURE "GREETWITHNAME"("NAME" VARCHAR(16777216))
+RETURNS VARCHAR(16777216)
+LANGUAGE JAVASCRIPT
+EXECUTE AS CALLER
+AS '
+try {
+    var message = "Happy Day";
+
+    if (NAME) {
+        message = "Happy Day, " + NAME + "!";
+    }
+
+    return message;
+} catch (err) {
+    return "Error: " + err;
+}
+';
 CREATE OR REPLACE PROCEDURE "SIMPLE_EXAMPLE"()
 RETURNS VARCHAR(16777216)
 LANGUAGE SQL
