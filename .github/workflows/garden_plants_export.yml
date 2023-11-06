@@ -1,13 +1,13 @@
 name: garden_plants_export
 
-on:
-  workflow_run:
-    #workflows: ["garden_plants_deploy_to_production"]
-    types:
-      - completed
+#on:
+ # workflow_run:
+  #  #workflows: ["garden_plants_deploy_to_production"]
+ #   types:
+  #    - completed
       
  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+#  workflow_dispatch:
 
 jobs:
   build:
