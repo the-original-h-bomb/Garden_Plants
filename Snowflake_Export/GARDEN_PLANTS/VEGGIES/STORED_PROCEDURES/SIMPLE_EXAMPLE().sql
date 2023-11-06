@@ -1,0 +1,5 @@
+CREATE OR REPLACE PROCEDURE "SIMPLE_EXAMPLE"()
+RETURNS VARCHAR(16777216)
+LANGUAGE SQL
+EXECUTE AS CALLER
+AS 'select''Hello, this is a simple stored procedure in Snowflake.'';';
