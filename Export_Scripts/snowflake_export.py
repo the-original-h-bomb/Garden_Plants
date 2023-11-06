@@ -295,7 +295,7 @@ for db in databases:
         for sp in stored_procedures:
             sp_name = sp[2]
             sp_arg = sp[5]
-            sp_arg_substring = (sp_arg)
+            sp_arg_substring = f"({sp_arg})"
             sp_folder_path = os.path.join(schema_folder_path, "STORED_PROCEDURES")
             os.makedirs(sp_folder_path, exist_ok=True)
             sp_export_path = os.path.join(sp_folder_path, sp_name + ".sql")
