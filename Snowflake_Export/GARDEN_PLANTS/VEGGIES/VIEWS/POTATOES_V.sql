@@ -1,0 +1,5 @@
+create or replace view POTATOES_V(
+	ID,
+	TYPE
+) as SELECT ID, TYPE FROM VEGGIES.POTATOeS 
+	WHERE TYPE LIKE '%red%';
