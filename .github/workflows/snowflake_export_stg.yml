@@ -1,4 +1,4 @@
-name: snowflake_export
+name: snowflake_export_to_stage
 
 # this workflow will run when the identified workflow below has completed
 on:
