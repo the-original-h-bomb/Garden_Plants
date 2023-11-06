@@ -294,7 +294,7 @@ for db in databases:
         
         for sp in stored_procedures:
             sp_name = sp[2]
-            sp_arg = sp[4]
+            sp_arg = sp[5]
             sp_arg_substring = sp_arg.replace("W_DB_NAME ", "")
             sp_folder_path = os.path.join(schema_folder_path, "STORED_PROCEDURES")
             os.makedirs(sp_folder_path, exist_ok=True)
