@@ -48,7 +48,7 @@ jobs:
 
 # path to the python script to run
         run: | 
-         python Export_Scripts/snowflake_export.py
+         python Export_Scripts/snowflake_export_stg.py
 
 # This step configures Git, stages the specific directory, commits, and pushes it to the 'stage' branch.     
       - name: Commit DDL to GitHub
