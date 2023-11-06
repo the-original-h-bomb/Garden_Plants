@@ -297,7 +297,7 @@ for db in databases:
             sp_arg = sp[5]
             if sp[4] == '()':
                 sp_arg_substring = f"({sp_arg})"
-            else
+            else:
                 sp_arg_substring = sp[4]
             sp_folder_path = os.path.join(schema_folder_path, "STORED_PROCEDURES")
             os.makedirs(sp_folder_path, exist_ok=True)
