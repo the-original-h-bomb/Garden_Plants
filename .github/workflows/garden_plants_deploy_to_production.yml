@@ -38,8 +38,8 @@ jobs:
         run: |
           echo "GITHUB_WORKSPACE: $env:GITHUB_WORKSPACE"
           python --version
-          # echo "Step 1: Installing schemachange"
-          # python -m pip install schemachange  --upgrade
+          echo "Step 1: Installing schemachange"
+          python -m pip install schemachange  --upgrade
           
           echo "Step 2: Running schemachange"
           schemachange -f "$env:GITHUB_WORKSPACE\Garden_Plants_DB" -a $env:SF_ACCOUNT -u $env:SF_USERNAME -r $env:SF_ROLE -w $env:SF_WAREHOUSE -d $env:SF_DATABASE -c $env:SF_CHANGE_HISTORY_TABLE --create-change-history-table
