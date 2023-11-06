@@ -1,1 +1,0 @@
-create or replace stream RAWSTREAM1 on table "GARDEN_PLANTS.VEGGIES.RAW";
