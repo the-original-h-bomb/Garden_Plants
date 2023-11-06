@@ -1,1 +1,0 @@
-create or replace event table MY_EVENTS;
