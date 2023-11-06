@@ -143,6 +143,11 @@ CREATE OR REPLACE FILE FORMAT MY_CSV_FORMAT
 	NULL_IF = ('NULL', 'null')
 	COMPRESSION = gzip
 ;
+CREATE OR REPLACE PROCEDURE "SIMPLE_EXAMPLE"()
+RETURNS VARCHAR(16777216)
+LANGUAGE SQL
+EXECUTE AS CALLER
+AS 'select''Hello, this is a simple stored procedure in Snowflake.'';';
 create or replace stream DATA_CHECK on table ROOT_DEPTH;
 create or replace task RAW_TO_NAMES
 	warehouse=COMPUTE_WH
